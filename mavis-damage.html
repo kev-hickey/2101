@@ -33,20 +33,27 @@
         font-size: 20px;
         text-align: center;
     }
+    .row {
+        display: flex;
+        justify-content: center;
+    }
   </style>
 </head>
 <body>
 
 <h1>MAVIS DAMAGE</h1>
 
-<button onclick="rapid()">Rapid Shot</button>
-<button onclick="rapidMAX()">Rapid Max</button>
-<button onclick="rapidMIN()">Rapid Min</button>
-<br>
-<button onclick="burst()">Burst Shot</button>
-<button onclick="burstMAX()">Burst Max</button>
-<button onclick="burstMIN()">Burst Min</button>
+<div class="row">
+  <button onclick="rapid()">Rapid Shot</button>
+  <button onclick="rapidMAX()">Rapid Max</button>
+  <button onclick="rapidMIN()">Rapid Min</button>
+</div>
 
+<div class="row">
+  <button onclick="burst()">Burst Shot</button>
+  <button onclick="burstMAX()">Burst Max</button>
+  <button onclick="burstMIN()">Burst Min</button>
+</div>
 <div id="output"></div>
 
 <script>
