@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Mavis Damage</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+        font-family: 'Audiowide';
+        text-align: center;
+        background-color: #202020;
+        color: white;
+    }
+    h1 {
+        color: #d13f7d;
+    }
+    button {
+        color: white;
+        background-color: #d13f7d;
+        font-family: inherit;
+        font-size: 18px;
+        margin: 5px;
+        padding: 10px;
+        border-radius: 50px;
+    }
+    #output {
+        font-family: monospace;
+        margin-top: 20px;
+        font-size: 20px;
+        text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+<h1>MAVIS DAMAGE</h1>
+
+<button onclick="rapid()">Rapid Shot</button>
+<button onclick="rapidMAX()">Rapid Max</button>
+<button onclick="rapidMIN()">Rapid Min</button>
+<br>
+<button onclick="burst()">Burst Shot</button>
+<button onclick="burstMAX()">Burst Max</button>
+<button onclick="burstMIN()">Burst Min</button>
+
+<div id="output"></div>
+
+<script>
+
+// Strength Modifier
+let str = 5;
+
+// Rage Damage Bonus
+let rage = 2;
+
+// Enhanced Weapon Damage Bonus
+let weapon = 2;
+
+function rollD4() {
+    return Math.floor(Math.random() * 4) + 1;
+}
+
+function rollD6() {
+    return Math.floor(Math.random() * 6) + 1;
+}
+
+function rollArray(n, fn) {
+    return Array.from({ length: n }, fn);
+}
+
+function modifyD4(arr) {
+    return arr.map(x => {
+        if (x === 1) return 2;
+        if (x === 4) return 6;
+        return x;
+    });
+}
+
+function sum(arr) {
+    return arr.reduce((a, b) => a + b, 0);
+}
+
+function format(arr) {
+    return `[${arr.join(", ")}]`;
+}
+
+function rapid() {
+    // raw rolls
+    let aRaw = rollArray(3, rollD4);
+    let bRaw = rollArray(3, rollD4);
+
+    // modified rolls (minimum roll threshold + vicious)
+    let aMod = modifyD4(aRaw);
+    let bMod = modifyD4(bRaw);
+
+    // sums
+    let aSum = sum(aMod);
+    let bSum = sum(bMod);
+
+    // choose highest
+    let chosenRaw = aSum >= bSum ? aRaw : bRaw;
+    let chosenMod = aSum >= bSum ? aMod : bMod;
+    let chosenSum = Math.max(aSum, bSum);
+    let chosenLabel = aSum >= bSum ? "Set 1" : "Set 2";
+
+    // double it
+    let doubled = chosenSum * 2;
+
+    // thermal damage
+    let thermalRolls = rollArray(2, rollD6);
+    let thermalSum = sum(thermalRolls);
+
+    // total
+    let energySum = doubled + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        ${format(aRaw)} → ${format(aMod)} = ${aSum}
+        ${format(bRaw)} → ${format(bMod)} = ${bSum}
+
+        Chosen: ${chosenSum}
+        ${chosenSum} × 2 = ${doubled}
+
+        Modifiers:
+        STR: +${str} → ${doubled + str}
+        RAGE: +${rage} → ${doubled + str + rage}
+        WEAPON: +${weapon} → ${doubled + str + rage + weapon}
+
+        Incendiary:
+        ${format(thermalRolls)} = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+function rapidMAX() {
+    // double it
+    let doubled = (6 + 6 + 6) * 2;
+
+    // thermal damage
+    let thermalSum = 6 + 6;
+
+    // total
+    let energySum = doubled + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        [4, 4, 4] → [6, 6, 6] = 18
+        [4, 4, 4] → [6, 6, 6] = 18
+
+        Chosen: 18
+        18 × 2 = ${doubled}
+
+        Modifiers:
+        STR: +${str}
+        RAGE: +${rage}
+        WEAPON: +${weapon}
+
+        Incendiary:
+        [6, 6] = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+function rapidMIN() {
+    // double it
+    let doubled = (2 + 2 + 2) * 2;
+
+    // thermal damage
+    let thermalSum = 1 + 1;
+
+    // total
+    let energySum = doubled + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        [1, 1, 1] → [2, 2, 2] = 6
+        [1, 1, 1] → [2, 2, 2] = 6
+
+        Chosen: 6
+        6 × 2 = ${doubled}
+
+        Modifiers:
+        STR: +${str}
+        RAGE: +${rage}
+        WEAPON: +${weapon}
+
+        Incendiary:
+        [1, 1] = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+function burst() {
+    // raw rolls
+    let raw = rollArray(3, rollD4);
+
+    // modified rolls (minimum roll threshold + vicious)
+    let mod = modifyD4(raw);
+
+    // sum
+    let rollSum = sum(mod);
+
+    // thermal damage
+    let thermalRolls = rollArray(2, rollD6);
+    let thermalSum = sum(thermalRolls);
+
+    // total
+    let energySum = rollSum + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        ${format(raw)} → ${format(mod)} = ${rollSum}
+
+        Modifiers:
+        STR: +${str} → ${rollSum + str}
+        RAGE: +${rage} → ${rollSum + str + rage}
+        WEAPON: +${weapon} → ${rollSum + str + rage + weapon}
+
+        Incendiary:
+        ${format(thermalRolls)} = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+function burstMAX() {
+    // sum
+    let rollSum = (6 + 6 + 6);
+
+    // thermal damage
+    let thermalSum = (6 + 6);
+
+    // total
+    let energySum = rollSum + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        [4, 4, 4] → [6, 6, 6] = ${rollSum}
+
+        Modifiers:
+        STR: +${str} → ${rollSum + str}
+        RAGE: +${rage} → ${rollSum + str + rage}
+        WEAPON: +${weapon} → ${rollSum + str + rage + weapon}
+
+        Incendiary:
+        [6, 6] = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+function burstMIN() {
+    // sum
+    let rollSum = (2 + 2 + 2);
+
+    // thermal damage
+    let thermalSum = (1 + 1);
+
+    // total
+    let energySum = rollSum + str + rage + weapon;
+    let total = energySum + thermalSum;
+
+    // output
+    document.getElementById("output").innerText =
+        `${total} DAMAGE
+        ${energySum} energy damage
+        ${thermalSum} thermal damage
+
+        Rolls:
+        [1, 1, 1] → [2, 2, 2] = ${rollSum}
+
+        Modifiers:
+        STR: +${str} → ${rollSum + str}
+        RAGE: +${rage} → ${rollSum + str + rage}
+        WEAPON: +${weapon} → ${rollSum + str + rage + weapon}
+
+        Incendiary:
+        [1, 1] = ${thermalSum}
+
+        TOTAL: ${total}
+        ${energySum} energy damage
+        ${thermalSum} thermal damage`;
+}
+
+</script>
+
+</body>
+</html>
