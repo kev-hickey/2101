@@ -60,61 +60,90 @@
         display: flex;
         justify-content: center;
     }
+    .layout {
+        display: flex;
+        min-height: 100vh;
+    }
+    .mainPanel {
+        width: 60%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .descPanel {
+        width: 40%;
+        padding: 20px;
+        box-sizing: border-box;
+        border-left: none;
+        text-align: left;
+        position: sticky;
+        top: 0;
+        align-self: flex-start;
+    }
+    .descPanel.active {
+        border-left: 5px solid #f1c232;
+    }
   </style>
 </head>
 <body>
 
-<h1>BRANDY BUTTONS</h1>
+<div class="layout">
 
-<div id="output"></div>
+    <div class="mainPanel">
 
-<br><br><br><br>
+        <h1>BRANDY BUTTONS</h1>
 
-<h2><i>THE LIFELINE</i></h2>
+        <div id="output"></div>
 
-<div class="row">
-  <button onclick="heal1()">Heal (1)</button>
-  <button onclick="heal2()">Heal (2)</button>
-  <button onclick="heal3()">Heal (3)</button>
-  <button onclick="heal4()">Heal (4)</button>
+        <br><br><br><br>
+
+        <h2><i>THE LIFELINE</i></h2>
+
+        <div class="row">
+        <button onclick="heal1()">Heal (1)</button>
+        <button onclick="heal2()">Heal (2)</button>
+        <button onclick="heal3()">Heal (3)</button>
+        <button onclick="heal4()">Heal (4)</button>
+        </div>
+
+        <div class="row">
+        <button onclick="restoration()">Restoration</button>
+        <button onclick="naniteSwarm()">Nanite Swarm</button>
+        <button onclick="defibrillate()">Defibrillate</button>
+        <button onclick="naniteReserve()">Nanite Reserve</button>
+        <button onclick="improvedHeal()">Improved Heal</button>
+        </div>
+
+        <h2>MANEUVERS</h2>
+
+        <h3>Actions</h3>
+        <div class="row">
+        <button onclick="administerAid()">Administer Aid</button>
+        <button onclick="agonizingLethargy()">Agonizing Lethargy</button>
+        <button onclick="enhancementInjection()">Enhancement Injection</button>
+        <button onclick="incite()">Incite</button>
+        </div>
+
+        <h3>Bonus Actions</h3>
+        <div class="row">
+        <button onclick="administerAid()">Administer Aid</button>
+        <button onclick="rally()">Rally</button>
+        </div>
+
+        <h3>Reactions</h3>
+        <div class="row">
+        <button onclick="administerAid()">Administer Aid</button>
+        <button onclick="shaddowPuppetry()">Shadow Puppetry</button>
+        <button onclick="targetedStrike()">Targeted Strike</button>
+        <button onclick="waterOfLife()">Water of Life</button>
+        </div>
+    </div>
+
+    <div class="descPanel">
+        <div id="descTitle"></div>
+        <div id="description"></div>
+    </div>
+
 </div>
-
-<div class="row">
-  <button onclick="restoration()">Restoration</button>
-  <button onclick="naniteSwarm()">Nanite Swarm</button>
-  <button onclick="defibrillate()">Defibrillate</button>
-  <button onclick="naniteReserve()">Nanite Reserve</button>
-  <button onclick="improvedHeal()">Improved Heal</button>
-</div>
-
-<h2>MANEUVERS</h2>
-
-<h3>Actions</h3>
-<div class="row">
-  <button onclick="administerAid()">Administer Aid</button>
-  <button onclick="agonizingLethargy()">Agonizing Lethargy</button>
-  <button onclick="enhancementInjection()">Enhancement Injection</button>
-  <button onclick="incite()">Incite</button>
-</div>
-
-<h3>Bonus Actions</h3>
-<div class="row">
-  <button onclick="administerAid()">Administer Aid</button>
-  <button onclick="rally()">Rally</button>
-</div>
-
-<h3>Reactions</h3>
-<div class="row">
-  <button onclick="administerAid()">Administer Aid</button>
-  <button onclick="shaddowPuppetry()">Shadow Puppetry</button>
-  <button onclick="targetedStrike()">Targeted Strike</button>
-  <button onclick="waterOfLife()">Water of Life</button>
-</div>
-
-<hr>
-<div id="descTitle"></div>
-<div id="description"></div>
-<hr>
 
 <script>
 
@@ -167,6 +196,7 @@ function heal1() {
         `(1 charge)
         
         A creature you touch regains a number of hit points equal to 1d8 + your Intelligence modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function heal2() {
@@ -192,6 +222,7 @@ function heal2() {
         `(2 charges)
         
         A creature you touch regains a number of hit points equal to 2d8 + your Intelligence modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function heal3() {
@@ -217,6 +248,7 @@ function heal3() {
         `(3 charges)
         
         A creature you touch regains a number of hit points equal to 3d8 + your Intelligence modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function heal4() {
@@ -242,6 +274,7 @@ function heal4() {
         `(4 charges)
         
         A creature you touch regains a number of hit points equal to 4d8 + your Intelligence modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function restoration() {
@@ -256,6 +289,7 @@ function restoration() {
         `(2 charges)
         
         You touch a creature and end one condition afflicting it. The condition can be blinded, deafened, paralyzed, or poisoned.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function naniteSwarm() {
@@ -284,6 +318,7 @@ function naniteSwarm() {
         Concentration: Yes
         
         Kolto energy radiates from you in an aura with a 30-foot radius. Until the power ends, the aura moves with you, centered on you. You can use a bonus action to cause one creature in the aura (including you) to regain 2d6 hit points. This power has no effect on androids or constructs.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function defibrillate() {
@@ -304,6 +339,7 @@ function defibrillate() {
         Concentration: No
         
         You touch a creature that has died within the last minute and administer a shock to restore it to life. That creature returns to life with 1 hit point. This power can't return to life a creature that has died of old age, nor can it restore any missing body parts. If the creature is lacking body parts or organs integral for its survival (its head, for instance) the power automatically fails. Once this power has restored a creature to life, it cannot benefit from this power again until it finishes a short or long rest.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function naniteReserve() {
@@ -324,6 +360,7 @@ function naniteReserve() {
         Concentration: No
         
         You touch a creature and grant it a small reserve of nanites. The first time the target would drop to 0 hit points as a result of taking damage, the target instead drops to 1 hit point, and the power ends. If the power is still in effect when the target is subjected to an effect that would kill it instantaneously without dealing damage, that effect is instead negated against the target, and the powers ends. This power has no effect on androids or constructs.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function improvedHeal() {
@@ -367,6 +404,7 @@ function improvedHeal() {
         `(5 charges)
         
         Choose up to six creatures in a 30-foot-radius sphere around you. Each target regains hit points equal to 3d8 + your Intelligence modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 // MANEUVERS
@@ -392,6 +430,7 @@ function administerAid() {
 
     document.getElementById("description").innerText =
         `As an action, bonus action, or reaction, you can expend a superiority die to tend to a creature you can touch. The creature regains a number of hit points equal to the number rolled + your maneuver ability modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function agonizingLethargy() {
@@ -409,6 +448,7 @@ function agonizingLethargy() {
 
     document.getElementById("description").innerText =
         `You can use an action to expend a superiority die. When you do so, choose a creature you can see within 30 feet of you. The target must make a Constitution saving throw. On a failed save, the target takes 1d6 radiation damage for each attack it makes until the start of your next turn.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function enhancementInjection() {
@@ -432,6 +472,7 @@ function enhancementInjection() {
 
     document.getElementById("description").innerText =
         `As an action, you can expend one superiority die to inject a creature you can touch with enhancements, granting them temporary hit points equal to the superiority die roll + your maneuver ability modifier, which last for 1 minute. Additionally, when the target makes a Strength or Constitution check or saving throw while it has these temporary hit points, it gains a bonus equal to your maneuver ability modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function incite() {
@@ -444,6 +485,7 @@ function incite() {
 
     document.getElementById("description").innerText =
         `On your turn, you can use an action and expend one superiority die to bolster the resolve of one of an ally within 30 feet who can see or hear you. The ally can add your maneuver ability modifier to every damage roll they make until the start of your next turn.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function rally() {
@@ -467,6 +509,7 @@ function rally() {
 
     document.getElementById("description").innerText =
         `On your turn, you can use a bonus action and expend one superiority die to bolster the resolve of one of your companions. When you do so, choose a friendly creature who can see or hear you. That creature gains temporary hit points equal to the superiority die roll + your maneuver ability modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function shaddowPuppetry() {
@@ -479,6 +522,7 @@ function shaddowPuppetry() {
 
     document.getElementById("description").innerText =
         `When a creature you can see within 30 feet of you is reduced to 0 hit points, you can use your reaction and expend a superiority die to give that creature a final act of aggression. That creature can immediately move a number of feet equal to 5 times the result of the die and make a single weapon attack against a target of your choice within its attack range, adding the die to the attack roll.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function targetedStrike() {
@@ -496,6 +540,7 @@ function targetedStrike() {
 
     document.getElementById("description").innerText =
         `When an ally who can see or hear you makes an attack against a creature, you can use your reaction to expend a superiority die. You add the superiority die to the attack roll, and the damage roll if it hits. You can use this maneuver before or after the attack roll, but before the GM determines whether or not the attack hits.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 function waterOfLife() {
@@ -519,6 +564,7 @@ function waterOfLife() {
 
     document.getElementById("description").innerText =
         `When an allied creature within 30 feet that you can see takes damage, you can use a reaction to expend a superiority die and roll it. The ally regains a number of hit points equal to the roll + your maneuver modifier.`;
+    document.querySelector(".descPanel").classList.add("active");
 }
 
 </script>
